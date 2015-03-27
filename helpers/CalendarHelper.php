@@ -18,8 +18,11 @@ class CalendarHelper
 			foreach($modelsForCalendar as $model) {
 				$entities = $model::find()->all();
 				if(!empty($entities)) {
-					foreach($entities as $entity)
+					foreach($entities as $entity) {
+						if(empty($entity->getCalendarDate()))
+							continue;
 						array_push($schedulesEntities, ['pk' => ActiveRecordHelper::getPk($entity), 'label' => $entity->getLabel(), 'date' => $entity->getCalendarDate(), 'modelClass' => $model::className()]);
+					}
 
 				}
 			}
