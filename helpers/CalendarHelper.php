@@ -19,9 +19,9 @@ class CalendarHelper
 				$entities = $model::find()->all();
 				if(!empty($entities)) {
 					foreach($entities as $entity) {
-						if(empty($entity->getCalendarDate()))
+						if(empty($entity->getEventDate()))
 							continue;
-						array_push($schedulesEntities, ['pk' => ActiveRecordHelper::getPk($entity), 'label' => $entity->getLabel(), 'date' => $entity->getCalendarDate(), 'modelClass' => $model::className()]);
+						array_push($schedulesEntities, ['pk' => ActiveRecordHelper::getPk($entity), 'label' => $entity->getLabel(), 'date' => $entity->getEventDate(), 'modelClass' => $model::className()]);
 					}
 
 				}
