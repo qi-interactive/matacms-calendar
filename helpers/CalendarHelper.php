@@ -9,7 +9,7 @@ use mata\helpers\ActiveRecordHelper;
 class CalendarHelper 
 {
 	
-	public static function getScheduledEntities($sortBy = 'date', $order = 'desc')
+	public static function getScheduledEntities($order = 'desc')
 	{
 		$modelsForCalendar = self::getModelsForCalendar();
 		$schedulesEntities = [];
@@ -19,17 +19,17 @@ class CalendarHelper
 				$entities = $model::find()->all();
 				if(!empty($entities)) {
 					foreach($entities as $entity) {
-						if(empty($entity->getCalendarDate()))
+						if(empty($entity->getEventDate()))
 							continue;
-						array_push($schedulesEntities, ['pk' => ActiveRecordHelper::getPk($entity), 'label' => $entity->getLabel(), 'date' => $entity->getCalendarDate(), 'modelClass' => $model::className()]);
+						array_push($schedulesEntities, ['pk' => ActiveRecordHelper::getPk($entity), 'label' => $entity->getLabel(), 'date' => $entity->getEventDate(), 'modelClass' => $model::className()]);
 					}
 
 				}
 			}
 		}
 
-		usort($schedulesEntities, function($a, $b) use ($sortBy, $order){
-			return ($order == 'desc') ? ($a[$sortBy] < $b[$sortBy]) : ($a[$sortBy] > $b[$sortBy]);
+		usort($schedulesEntities, function($a, $b) use ($order){
+			return ($order == 'desc') ? ($a['date'] < $b['date']) : ($a['date'] > $b['date']);
 		});
 		return $schedulesEntities;
 	}
