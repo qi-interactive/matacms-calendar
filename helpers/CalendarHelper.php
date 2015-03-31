@@ -9,7 +9,7 @@ use mata\helpers\ActiveRecordHelper;
 class CalendarHelper 
 {
 	
-	public static function getScheduledEntities($sortBy = 'date', $order = 'desc')
+	public static function getScheduledEntities($order = 'desc')
 	{
 		$modelsForCalendar = self::getModelsForCalendar();
 		$schedulesEntities = [];
@@ -28,8 +28,8 @@ class CalendarHelper
 			}
 		}
 
-		usort($schedulesEntities, function($a, $b) use ($sortBy, $order){
-			return ($order == 'desc') ? ($a[$sortBy] < $b[$sortBy]) : ($a[$sortBy] > $b[$sortBy]);
+		usort($schedulesEntities, function($a, $b) use ($order){
+			return ($order == 'desc') ? ($a['date'] < $b['date']) : ($a['date'] > $b['date']);
 		});
 		return $schedulesEntities;
 	}
