@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $reflection = new \ReflectionClass($entity['modelClass']);
             $moduleName = $reflection->getShortName();
         ?>
-        <div class="calendar-event"><span class="time"><?= date('H:i', strtotime($entity['date'])) . '</span><span class="module">' . $moduleName . '</span><span class="event-label">' . $entity['label'] . '</span>'; ?></div>
+        <div class="calendar-event"><span class="time"><?= date('H:i', strtotime($entity['date'])) . '</span><span class="module">' . Inflector::camel2words($moduleName) . '</span><span class="event-label">' . $entity['label'] . '</span>'; ?></div>
 
         <?php
         endforeach;
