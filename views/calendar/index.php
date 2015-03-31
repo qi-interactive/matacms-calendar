@@ -1,8 +1,14 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Inflector;
+use yii\helpers\StringHelper;
+use matacms\calendar\helpers\CalendarHelper;
+
 /* @var $this yii\web\View */
 /* @var $model mata\contentblock\models\ContentBlock */
+
+\matacms\theme\simple\assets\CalendarAsset::register($this);
 
 $this->title = \Yii::$app->controller->id;
 $this->params['breadcrumbs'][] = $this->title;
@@ -13,19 +19,27 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php
-    echo \yii\widgets\ListView::widget([
-        'dataProvider' => $dataProvider,
-        'options' => [
-            'tag' => 'ul',
-        ],
-        'itemOptions' => [
-            'tag' => 'li',
-        ],
-        'itemView' => function ($model, $key, $index, $widget) {
-	        //return print_r($model, true);
-	        return $model['label'] . ' at ' . $model['date'] . ' / ' . $model['modelClass'] . '(' . $model['pk'] . ')';
-    	},
-        'summary' => '',
-    ]);
+    if(!empty($organizedScheduledEntities)) {
+        foreach($organizedScheduledEntities as $date => $entities):
+    ?>
+        <section>
+        <?php
+        $groupDate = CalendarHelper::getCalendarGroupDate($date);
+        ?>
+        <header class="calendar-date"><?= $groupDate['date'] ?><?php if(!empty($groupDate['extra'])) echo '<span class="extra">['.$groupDate['extra'].']</span>';?></header>
+        <?php
+        foreach($entities as $entity):
+            $reflection = new \ReflectionClass($entity['modelClass']);
+            $moduleName = $reflection->getShortName();
+        ?>
+        <div class="calendar-event"><span class="time"><?= date('H:i', strtotime($entity['date'])) . '</span><span class="module">' . $moduleName . '</span><span class="event-label">' . $entity['label'] . '</span>'; ?></div>
+
+        <?php
+        endforeach;
+        ?>
+        </section>
+    <?php 
+        endforeach;
+    }
     ?>
 </div>

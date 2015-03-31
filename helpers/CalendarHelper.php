@@ -9,14 +9,19 @@ use mata\helpers\ActiveRecordHelper;
 class CalendarHelper 
 {
 	
-	public static function getScheduledEntities($order = 'desc')
+	public static function getScheduledEntities($fromDate = null, $order = 'asc')
 	{
 		$modelsForCalendar = self::getModelsForCalendar();
 		$schedulesEntities = [];
 
 		if(!empty($modelsForCalendar)) {
 			foreach($modelsForCalendar as $model) {
-				$entities = $model::find()->all();
+				if(!empty($fromDate)){
+					$eventDateAttribute = $model::getEventDateAttribute();
+					$entities = $model::find()->where("$eventDateAttribute >= :fromDate", [':fromDate' => $fromDate])->all();
+				}
+				else 
+					$entities = $model::find()->all();
 				if(!empty($entities)) {
 					foreach($entities as $entity) {
 						if(empty($entity->getEventDate()))
@@ -70,6 +75,39 @@ class CalendarHelper
 		}
 
 		return $modelsForCalendar;
+	}
+
+	public static function organizeScheduledEntites($schedulesEntities)
+	{
+		$results = [];
+		if(!empty($schedulesEntities)) {
+			$eventDateGroups = [];
+			foreach($schedulesEntities as $entity) {
+				array_push($eventDateGroups, date('Y-m-d', strtotime($entity['date'])));
+			}
+
+			foreach($schedulesEntities as $entity) {
+				$results[date('Y-m-d', strtotime($entity['date']))][] = $entity;
+			}
+		}
+		return $results;
+	}
+
+	public static function getCalendarGroupDate($date, $format = 'd-m-Y') 
+	{
+		$date = new \DateTime($date);
+		$today = new \DateTime();
+		$today->setTime(0, 0, 0);
+		$tomorrow = new \DateTime('tomorrow');
+		$tomorrow->setTime(0, 0, 0);
+
+		if($date == $today) {
+			return ['date' => $date->format($format), 'extra' => 'TODAY'];
+		} elseif($date == $tomorrow) {
+			return ['date' => $date->format($format), 'extra' => 'TOMORROW'];
+		} else {
+			return ['date' => $date->format($format)];
+		}
 	}
 
 	private static function getModelsFromNamespace($namespace) 

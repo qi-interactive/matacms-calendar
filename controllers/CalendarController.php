@@ -21,13 +21,14 @@ class CalendarController extends Controller
 
 	public function actionIndex() {
 
-		$scheduledEntities = CalendarHelper::getScheduledEntities();
+		$scheduledEntities = CalendarHelper::getScheduledEntities(date('Y-m-d H:i:s'));
+		$organizedScheduledEntities = CalendarHelper::organizeScheduledEntites($scheduledEntities);
 
-		$dataProvider = new \yii\data\ArrayDataProvider([
-            'allModels' => $scheduledEntities,
-        ]);
+		// $dataProvider = new \yii\data\ArrayDataProvider([
+  //           'allModels' => $scheduledEntities,
+  //       ]);
 
-		return $this->render("index", ['dataProvider' => $dataProvider]);
+		return $this->render("index", ['organizedScheduledEntities' => $organizedScheduledEntities]);
 	}
 
 }
