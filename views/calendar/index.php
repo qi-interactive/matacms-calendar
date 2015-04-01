@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="calendar-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<h1>Calendar</h1>
 
     <?php
     if(!empty($organizedScheduledEntities)) {
