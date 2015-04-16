@@ -1,5 +1,6 @@
 $(window).ready(function() {
 
+    // @mfiedorowicz: WHY IS IT HERE ?! TO BE CHECKED.
 
     $(document).on('click', '#add-media, .edit-media', function() {
         return false;
