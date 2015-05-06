@@ -43,3 +43,13 @@ $this->params['breadcrumbs'][] = $this->title;
     }
     ?>
 </div>
+
+<script>
+
+    parent.mata.simpleTheme.header
+    .setText('YOU\'RE IN <?= $this->context->module->id ?> MODULE')
+    .hideBackToListView()
+    .hideVersions()
+    .show();
+
+</script>
