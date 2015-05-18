@@ -73,7 +73,7 @@ class CalendarHelper
 
 				// create object to check if it's instance of CalendarInterface
 				$model = new $classNameWithNamespace(null);
-				if (!$model instanceof \matacms\base\CalendarInterface) 
+				if (!$model instanceof \matacms\interfaces\CalendarInterface) 
 					continue;
 
 				array_push($modelsForCalendar, $model);
