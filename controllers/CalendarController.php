@@ -1,4 +1,10 @@
 <?php
+ 
+/**
+ * @link http://www.matacms.com/
+ * @copyright Copyright (c) 2015 Qi Interactive Limited
+ * @license http://www.matacms.com/license/
+ */
 
 namespace matacms\calendar\controllers;
 
@@ -23,10 +29,6 @@ class CalendarController extends Controller
 
 		$scheduledEntities = CalendarHelper::getScheduledEntities(date('Y-m-d H:i:s'));
 		$organizedScheduledEntities = CalendarHelper::organizeScheduledEntites($scheduledEntities);
-
-		// $dataProvider = new \yii\data\ArrayDataProvider([
-  //           'allModels' => $scheduledEntities,
-  //       ]);
 
 		return $this->render("index", ['organizedScheduledEntities' => $organizedScheduledEntities]);
 	}

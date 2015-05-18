@@ -1,12 +1,12 @@
 {
     "name": "matacms/matacms-calendar",
-    "description": "Calendar management for MATA CMS",
+    "description": "Calendar for MATA CMS",
     "keywords": ["yii2", "matacms-calendar", "calendar", "mata"],
     "type": "yii2-extension",
     "license": "MIT",
     "support": {
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "matacms\\calendar\\": ""
