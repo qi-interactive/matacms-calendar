@@ -10,7 +10,7 @@ MATA CMS Calendar module allows display entities (scheduled for publication) fro
 Installation
 ------------
 
-- Add the application using composer: 
+- Add the application using composer:
 
 ```json
 "matacms/matacms-calendar": "~1.0.0"
@@ -18,6 +18,10 @@ Installation
 
 Changelog
 ---------
+
+## 1.0.1-alpha, July 23, 2015
+
+- Fix for CalendarHelper: check if model implements CalendarInterface via ReflectionClass before initializing model.
 
 ## 1.0.0-alpha, May 18, 2015
 

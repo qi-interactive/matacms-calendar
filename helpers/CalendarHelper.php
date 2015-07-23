@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * @link http://www.matacms.com/
  * @copyright Copyright (c) 2015 Qi Interactive Limited
@@ -12,9 +12,9 @@ use mata\helpers\MataModuleHelper;
 use mata\helpers\ComposerHelper;
 use mata\helpers\ActiveRecordHelper;
 
-class CalendarHelper 
+class CalendarHelper
 {
-	
+
 	public static function getScheduledEntities($fromDate = null, $order = 'asc')
 	{
 		$modelsForCalendar = self::getModelsForCalendar();
@@ -26,7 +26,7 @@ class CalendarHelper
 					$eventDateAttribute = $model::getEventDateAttribute();
 					$entities = $model::find()->where("$eventDateAttribute >= :fromDate", [':fromDate' => $fromDate])->all();
 				}
-				else 
+				else
 					$entities = $model::find()->all();
 				if(!empty($entities)) {
 					foreach($entities as $entity) {
@@ -45,7 +45,7 @@ class CalendarHelper
 		return $schedulesEntities;
 	}
 
-	public static function getModelsForCalendar() 
+	public static function getModelsForCalendar()
 	{
 		$modules = \Yii::$app->getModules();
 
@@ -54,7 +54,7 @@ class CalendarHelper
 		foreach ($modules as $module) {
 			if (is_array($module))
 				$module = new $module["class"](null); // module not initialized
-			
+
 			$moduleClass = get_class($module);
 			$reflector = new \ReflectionClass($moduleClass);
 			$moduleClassNamespace = $reflector->getNamespaceName();
@@ -71,10 +71,14 @@ class CalendarHelper
 				if($containsFormSubstring || $containsSearchSubstring)
 					continue;
 
-				// create object to check if it's instance of CalendarInterface
-				$model = new $classNameWithNamespace(null);
-				if (!$model instanceof \matacms\interfaces\CalendarInterface) 
+                $class = new \ReflectionClass($classNameWithNamespace);
+
+				// check if class implements CalendarInterface
+				if (!$class->implementsInterface('\matacms\interfaces\CalendarInterface')) {
 					continue;
+				}
+
+				$model = new $classNameWithNamespace(null);
 
 				array_push($modelsForCalendar, $model);
 			}
@@ -99,7 +103,7 @@ class CalendarHelper
 		return $results;
 	}
 
-	public static function getCalendarGroupDate($date, $format = 'd-m-Y') 
+	public static function getCalendarGroupDate($date, $format = 'd-m-Y')
 	{
 		$date = new \DateTime($date);
 		$today = new \DateTime();
@@ -116,7 +120,7 @@ class CalendarHelper
 		}
 	}
 
-	private static function getModelsFromNamespace($namespace) 
+	private static function getModelsFromNamespace($namespace)
 	{
 		$foldersToScan = [
 			\Yii::getAlias('@mata-cms') . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . str_replace("matacms", "mata-cms", str_replace('\\', '/', $namespace)),
