@@ -26,19 +26,22 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php
         $groupDate = CalendarHelper::getCalendarGroupDate($date);
         ?>
-        <header class="calendar-date"><?= $groupDate['date'] ?><?php if(!empty($groupDate['extra'])) echo '<span class="extra">['.$groupDate['extra'].']</span>';?></header>
+        <header class="calendar-date"><?= date('d F Y', strtotime($groupDate['date'])); ?><?php if(!empty($groupDate['extra'])) echo ' - <span class="extra">'.$groupDate['extra'].'</span>';?></header>
         <?php
         foreach($entities as $entity):
             $reflection = new \ReflectionClass($entity['modelClass']);
             $moduleName = $reflection->getShortName();
         ?>
-        <div class="calendar-event"><span class="time"><?= date('H:i', strtotime($entity['date'])) . '</span><span class="module">' . Inflector::camel2words($moduleName) . '</span><span class="event-label">' . $entity['label'] . '</span>'; ?></div>
+        <div class="calendar-event row">
+            <div class="one columns"><span class="time"><?= date('H:i', strtotime($entity['date'])) ?></span></div>
+            <div class="eleven columns"><span class="module"><?= Inflector::camel2words($moduleName) ?></span><span class="event-label"><?= $entity['label'] ?></span></div>
+        </div>
 
         <?php
         endforeach;
         ?>
         </section>
-    <?php 
+    <?php
         endforeach;
     }
     ?>
@@ -47,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <script>
 
     parent.mata.simpleTheme.header
-    .setText('YOU\'RE IN <?= Inflector::camel2words($this->context->module->id) ?> MODULE')
+    .setText('YOU\'RE IN <?= Inflector::camel2words($this->context->module->id) ?> MODULE: SCHEDULED PUBLICATIONS')
     .hideBackToListView()
     .hideVersions()
     .show();
