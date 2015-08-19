@@ -1,3 +1,5 @@
+
+
 $(window).ready(function() {
 
     // @mfiedorowicz: WHY IS IT HERE ?! TO BE CHECKED.
@@ -32,5 +34,7 @@ $(window).ready(function() {
     	return false;
     });
 
-    
 })
+
+
+
