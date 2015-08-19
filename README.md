@@ -19,6 +19,9 @@ Installation
 Changelog
 ---------
 
+## xxx xxx
+- 
+
 ## 1.0.1-alpha, July 23, 2015
 
 - Fix for CalendarHelper: check if model implements CalendarInterface via ReflectionClass before initializing model.
