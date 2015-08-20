@@ -33,11 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 $reflection = new \ReflectionClass($entity['modelClass']);
             $moduleName = $reflection->getShortName();
             ?>
-            <div class="calendar-event row">
-                <div class="two columns event-time"><span class="time"><?= date('H:i', strtotime($entity['date'])) ?></span></div>
-                <div class="ten columns event-label">
-                    <div class="left-container"><span class="module"><?= Inflector::camel2words($moduleName) ?></span></div>
-                    <div class="right-container"><span class="event-text"><?= $entity['label'] ?></span></div></div>
+            <div class="panel-body">
+                <div class="calendar-event row">
+                    <div class="two columns event-time"><span class="time"><?= date('H:i', strtotime($entity['date'])) ?></span></div>
+                    <div class="ten columns event-label">
+                        <div class="left-container"><span class="module"><?= Inflector::camel2words($moduleName) ?></span></div>
+                        <div class="right-container"><span class="event-text"><?= $entity['label'] ?></span></div></div>
+                    </div>
                 </div>
 
                 <?php
