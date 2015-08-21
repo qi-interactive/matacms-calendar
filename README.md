@@ -19,8 +19,9 @@ Installation
 Changelog
 ---------
 
-## xxx  xxx
-- 
+## 1.0.2-alpha, August 21, 2015
+
+- Updated markup
 
 ## 1.0.1-alpha, July 23, 2015
 
